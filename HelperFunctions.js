@@ -13,7 +13,7 @@ function IsEvenlyDivisibleByNumbers(input, numbers) {
     if (!Array.isArray(numbers) || input <= 0) return;
     let output = new Set;
     for (let i = 0; i < numbers.length; i++) {
-        console.log(isDivisibleBy(input, i));
+        //console.log(isDivisibleBy(input, i));
         output.add(isDivisibleBy(input, i));       
     }
     return !output.has(false) && output.has(true);
@@ -53,6 +53,10 @@ function isEven(input) {
 
 function sumArray(arr) {
     return arr.reduce((a, b)=> a + b, 0);
+}
+
+function multiplyArray(arr) {
+    return arr.reduce((a, b)=> a * b, 1);
 }
 
 function getFactors(input) {
