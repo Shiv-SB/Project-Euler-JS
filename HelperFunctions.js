@@ -8,6 +8,17 @@ function isDivisibleBy(input, divisor) {
     return false;
 }
 
+// Returns Bool based on if input is evenly divisible by provided array of numbers
+function IsEvenlyDivisibleByNumbers(input, numbers) {
+    if (!Array.isArray(numbers) || input <= 0) return;
+    let output = new Set;
+    for (let i = 0; i < numbers.length; i++) {
+        console.log(isDivisibleBy(input, i));
+        output.add(isDivisibleBy(input, i));       
+    }
+    return !output.has(false) && output.has(true);
+}
+
 function generateFibSeq(length, startingNumber = 1) {
     let fib = [startingNumber, startingNumber + 1];
     for (let i = 2; i < length; i++) {
