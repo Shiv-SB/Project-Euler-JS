@@ -1,0 +1,17 @@
+<script src="./HelperFunctions.js"></script>
+<p id="output"></p>
+<script>
+
+const upperLimit = 4_000_000;
+let fibSeq = generateFibSeq(60)
+
+fibSeq = trimArray(fibSeq, null, upperLimit)
+
+fibSeq = fibSeq.filter((val)=> {
+    return isEven(val);
+});
+
+output(sumArray(fibSeq));
+
+</script>
+
