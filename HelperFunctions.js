@@ -104,7 +104,22 @@ let helper = {
                 if(n % i == 0) return false;
                 return true;
             }
-        }
+        },
+        pythTriplet: {
+            isValid: function(a, b, c) {
+                if(!Number.isInteger(a) || !Number.isInteger(b) || !Number.isInteger(c)) {
+                    return false;
+                }
+                let newTrip = [helper.math.pythTriplet.newFromA(a).sort()].flat(); // a < b < c so can sort
+                if(newTrip[0] === b && newTrip[1] === c) return true;
+                return false;
+            },
+            newFromA: function(a) {
+                let b = (1000 * a - 500_000)/(a - 1000);
+                let c = (-1 * a**2 + 1000*a - 500_000)/(a - 1000);
+                return [b, c];
+            },
+        },
     },
     generate: {
         fibSeq: function(length, startingNumber = 1) {
@@ -143,6 +158,16 @@ let helper = {
                 }
             }
             return primes[n -1];
+        },
+        pythTriplet: function(max) {
+            let validTriplets = [];
+            for (let i = 1; i < max; i++) {
+                let attempt = [i, ...helper.math.pythTriplet.newFromA(i)];
+                if(helper.math.pythTriplet.isValid(attempt[0], attempt[1], attempt[2])) {
+                    validTriplets.push(attempt);
+                }        
+            }
+            return validTriplets;
         }
     },
 }

@@ -8,35 +8,28 @@ let a, b, c;
 
 // Example:
 {let a = 3, b = 4, c = 5;
-console.log(a**2 + b**2 === c**2);}
+//console.log(a**2 + b**2 === c**2);
+}
 
 // with some arithmetic on paper I got the solutions for a,b,c:
-
 a - 1000 !== 0; // lets make this the iterable
 a = 200;
 b = (1000 * a - 500_000)/(a - 1000);
 c = (-1 * a**2 + 1000*a - 500_000)/(a - 1000);
 
-function computePythTriplet(a) {
-    let b = (1000 * a - 500_000)/(a - 1000);
-    let c = (-1 * a**2 + 1000*a - 500_000)/(a - 1000);
-    return [b, c];
-}
-
-function isPythNumberTriplet(a, b, c) {
-    if(!Number.isInteger(a) || !Number.isInteger(b) || !Number.isInteger(c)) {
-        return false;
-    }
-
-    let newTrip = [computePythTriplet(a).sort()].flat(); // a < b < c so can sort
-    console.log(newTrip);
-    if(newTrip[0] === b && newTrip[1] === c) return true;
-    return false;
-}
-
 const upperBound = 1000;
+let validTriplets = helper.generate.pythTriplet(upperBound);
+let specialTriplet = [];
 
-for (let i = 1; i < upperBound; i++) {
-    if ()    
+
+// test:
+for (let i = 0; i < validTriplets.length; i++) {
+    let triplet = validTriplets[i];
+    let sum = helper.array.sum(triplet);
+    console.log(sum);    
 }
+
+output(helper.array.multiply(validTriplets[0])) // got 0th index by inspection
+
+
 </script>
