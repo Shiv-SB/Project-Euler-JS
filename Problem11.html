@@ -27,8 +27,58 @@ const grid = [
   1, 70, 54, 71, 83, 51, 54, 69, 16, 92, 33, 48, 61, 43, 52, 1, 89, 19, 67, 48
 ];
 
-function getEntry(i, j) {
-    return grid[i * 20 * j];
+function getEntry(i, j, size = 20) {
+    return grid[i * size * j];
 }
+
+/*
+get 4x4 neighbours
+find 4 largest numbers in neighbourhood
+product 4 numbers
+find largest from product
+*/
+
+// needs to be 4 x 4 grid lol
+function getNeighbours(i) {
+    if (i > grid.length) return;
+    const size = 20;
+
+    let neigbhours = [
+        [grid[i], grid[i + 1], grid[i + 2], grid[i + 3]],
+        [grid[i + size], grid[i + size + 1], grid[i + size + 2], grid[i + size + 3]],
+        [grid[i + size*2], grid[i + size*2 + 1], grid[i + size*2 + 2], grid[i + size*2 + 3]],
+        [grid[i + size*3], grid[i + size*3 + 1], grid[i + size*3 + 2], grid[i + size*3 + 3]]
+    ];
+    return neigbhours;
+}
+
+function getHighestProduct(grid) { // for 4x4 grid
+    gridF = grid.flat();
+    const p = helper.array.multiply;
+    const s = 4; // size
+    let diag1 = [gridF[0], gridF[5], gridF[10], gridF[15]];
+    let diag2 = [gridF[3], gridF[6], gridF[9], gridF[12]];
+    let row1 = [grid[0]].flat();
+    let row2 = [grid[1]].flat();
+    let row3 = [grid[2]].flat();
+    let row4 = [grid[3]].flat();
+    let col1 = [gridF[0], gridF[s], gridF[s*2], gridF[s*3]];
+    let col2 = [gridF[1], gridF[s + 1], gridF[s*2 + 1], grid[s*3 + 1]];
+    let col3 = [gridF[2], gridF[s + 2], gridF[s*2 + 2], grid[s*3 + 2]];
+    let col4 = [gridF[3], gridF[s + 3], gridF[s*2 + 3], grid[s*3 + 3]];
+
+    return helper.array.max([
+        p(diag1), p(diag2), p(row1), p(row2), p(row3), p(row4), p(col1), p(col2), p(col3), p(col4)
+    ].filter((x)=>{
+        return !Number.isNaN(x);
+    }));
+}
+
+let prods = [];
+for (let i = 0; i < grid.length; i++) {
+    prods.push(getHighestProduct(getNeighbours(i)));
+}
+
+output(helper.array.max(prods));
 
 </script>
