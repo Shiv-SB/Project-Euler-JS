@@ -27,8 +27,31 @@ const series = [
     "71636269561882670428252483600823257530420752963450"
 ].join("");
 
-let storage = [];
+const seriesArray = series.split("");
+const adjacencyLength = 12;
+let products = [];
 
+let locationsOf9s = helper.array.indexesOf(seriesArray, 9); // creates array of indexes where the number 9 is
+let neighbourhoods = [];
+
+for (let i = 0; i < locationsOf9s.length; i++) {
+    const location = locationsOf9s[i];    
+    let neighbours = seriesArray.slice(location - adjacencyLength, location + adjacencyLength + 1).join(""); // gets 3 neighbours from each side
+    neighbourhoods.push(neighbours);
+
+    //console.log(neighbours);
+    console.assert(Number(seriesArray[location]) === 9, `Location incorrect`);
+}
+
+// I now have any array containing every local neighbourhood of every 9 in "neighbourhoods"
+
+for (let i = 0; i < neighbourhoods.length; i++) {
+
+    // get every conseq 13 length number 
+
+}
+
+console.log(products);
 
 
 </script>

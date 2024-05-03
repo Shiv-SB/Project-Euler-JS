@@ -15,7 +15,7 @@ let helper = {
                 if(!lowerBound && upperBound) {
                     return lessThan(entry, upperBound);
                 }
-            })
+            });
             return newArr;
         },
         new: function(length) {
@@ -39,7 +39,13 @@ let helper = {
                 arr1.length === arr2.length &&  
                 arr1.every((val, i) => val === arr2[i])
             );
-        }
+        },
+        indexesOf: function(array, val) {
+            return array.reduce((r, n, i)=> {
+                n == val && r.push(i);
+                return r;
+            }, []);
+        },
     },
     math: {
         isDivisibleBy: function(input, divisor) {
