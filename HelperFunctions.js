@@ -168,7 +168,12 @@ let helper = {
                 }        
             }
             return validTriplets;
-        }
+        },
+        triangleNo: function(n) {
+            if(n < 1) return;
+            let list = helper.array.new(n);
+            return helper.array.sum(list);
+        },
     },
 }
 

@@ -1,0 +1,15 @@
+<script src="./HelperFunctions.js"></script>
+Highly Divisible Triangular Number
+<p id="output"></p>
+
+<script>
+
+const limit = 10000;
+let i = 2;
+do {
+    i++
+    console.log(i);
+} while (helper.math.getFactors(helper.generate.triangleNo(i)).length <= limit);
+console.log(helper.generate.triangleNo(i));
+
+</script>
