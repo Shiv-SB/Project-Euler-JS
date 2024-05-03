@@ -2,26 +2,17 @@
 <p id="output"></p>
 
 <script>
-//working number = 2520
 let range = [2, 3, 5, 7, 11, 13, 17, 19];
-let fullRange = newArray(20);
-const increment = 20 * 19;
-const upperBound = 100000000;
-const lowerBound = multiplyArray(range);
-let outputs = [];
-let outputsSet = new Set;
+let fullRange = helper.array.new(20);
+const lowerBound = helper.array.multiply(range) + 10;
 
 console.log(`Lower bound: ${lowerBound}`);
 
-// how tf do I do this
+let i = lowerBound;
+do {
+    i+=20
+} while (! helper.math.isDivisibleByNumbers(i, fullRange));
 
-while () {
-
-}
-
-// test:
-
-
-output(outputs);
+output(i);
 
 </script>

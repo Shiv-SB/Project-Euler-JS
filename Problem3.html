@@ -4,8 +4,8 @@
 
 const primeNo = 600851475143;
 
-let uniqueFactors = new Set(getFactors(primeNo));
+let uniqueFactors = new Set(helper.math.getFactors(primeNo));
 
-output(getMaxVal(uniqueFactors));
+output(helper.array.max(uniqueFactors));
 
 </script>

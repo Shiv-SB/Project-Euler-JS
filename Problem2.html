@@ -3,15 +3,15 @@
 <script>
 
 const upperLimit = 4_000_000;
-let fibSeq = generateFibSeq(60)
+let fibSeq = helper.generate.fibSeq(60)
 
-fibSeq = trimArray(fibSeq, null, upperLimit)
+fibSeq = helper.array.trim(fibSeq, null, upperLimit)
 
 fibSeq = fibSeq.filter((val)=> {
-    return isEven(val);
+    return helper.math.isEven(val);
 });
 
-output(sumArray(fibSeq));
+output(helper.array.sum(fibSeq));
 
 </script>
 
