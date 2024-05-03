@@ -46,6 +46,9 @@ let helper = {
                 return r;
             }, []);
         },
+        neighbours: function(array, location, width) {
+            return array.slice(location - width, location + width + 1);
+        },
     },
     math: {
         isDivisibleBy: function(input, divisor) {
