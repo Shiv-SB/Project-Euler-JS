@@ -1,4 +1,4 @@
-let helper = {
+export let helper = {
     array: {
         trim: function(arr, lowerBound, upperBound) {
             const greaterThan = (x, lim) => x > lim;
@@ -68,18 +68,21 @@ let helper = {
         isEven: function(input) {
             return !Boolean(input % 2);
         },
-        getFactors: function(input) {
-            let output = [];
-            let i = 2;
-            while(i <= input) {
-                if(input % i == 0) {
-                    input = input / i;
-                    output.push(i);
-                } else {
-                    i++;
+        getFactors: function(number) {
+            let factors = [];
+            let possibleFactor = 1;
+            let sqrt = Math.sqrt(number);
+            while(possibleFactor <= sqrt){
+                if(number % possibleFactor == 0){
+                    factors[factors.length] = possibleFactor;  
+                let otherPossibleFactor = number / possibleFactor;
+                    if(otherPossibleFactor > possibleFactor){
+                        factors[factors.length] = otherPossibleFactor;
+                    } 
                 }
+                possibleFactor++;
             }
-            return output;
+            return factors;
         },
         isPalindrome(input) {
             input = input.toString();
@@ -170,12 +173,19 @@ let helper = {
             return validTriplets;
         },
         triangleNo: function(n) {
-            if(n < 1) return;
-            let list = helper.array.new(n);
-            return helper.array.sum(list);
+            return n * (n + 1) / 2
+        },
+        triangleNoWithMoreThanNFactors: function(n) {
+            let counter = 1;
+            let triangleNumber = counter++;
+            while(helper.math.getFactors(triangleNumber).length < n){
+                triangleNumber += counter++;
+            }
+            return triangleNumber;
         },
     },
 }
+
 
 function output(o, id="output") {
     document.getElementById(id).innerHTML = o;

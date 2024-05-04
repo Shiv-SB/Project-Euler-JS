@@ -1,15 +1,33 @@
 <script src="./HelperFunctions.js"></script>
-Highly Divisible Triangular Number
+Highly Divisible Triangular Number.
+No longer using HTML, migrated over to Node.js
 <p id="output"></p>
 
 <script>
 
-const limit = 10000;
-let i = 2;
-do {
-    i++
-    console.log(i);
-} while (helper.math.getFactors(helper.generate.triangleNo(i)).length <= limit);
-console.log(helper.generate.triangleNo(i));
+// cant brute force this one lol
+const lowerBound = 10;
+const limit = lowerBound * 100;
+const target = 50;
+let triNumbers = [];
+let numbersAndFactors = {}; // number: factorLength
+
+for (let i = lowerBound; i < limit; i++) {
+    let triNumber = helper.generate.triangleNo(i);
+    triNumbers.push(triNumber);
+}
+
+//console.log(triNumbers);
+
+for (let i = 0; i < triNumbers.length; i++) {
+    const triNumber = triNumbers[i];
+    let factorsLength = helper.math.getFactors(triNumber).length;
+    //console.log(triNumber, factorsLength);
+    if(factorsLength >= target) {
+        console.log("Target reached reached!!!");
+        console.log(`TriNo: ${triNumber} | Factor Length: ${factorsLength}`);   
+        break;
+    }
+}
 
 </script>
