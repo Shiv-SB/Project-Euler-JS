@@ -183,6 +183,19 @@ export let helper = {
             }
             return triangleNumber;
         },
+        collatzSeq: function(n) {
+            const arr = [];
+            while (n !== 1) {
+                arr.push(n);
+                if (n % 2 === 0) {
+                    n /= 2;
+                } else {
+                    n = 3 * n + 1;
+                }
+            }
+            arr.push(1);
+            return arr;
+        },
     },
 }
 
