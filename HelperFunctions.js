@@ -123,6 +123,13 @@ export let helper = {
                 return [b, c];
             },
         },
+        binomialCoefficient: function(n, k) {
+            let result = 1;
+            for (let i = 0; i < k; i++) {
+                result *= (n - i) / (i + 1);
+            }
+            return result;
+        },
     },
     generate: {
         fibSeq: function(length, startingNumber = 1) {

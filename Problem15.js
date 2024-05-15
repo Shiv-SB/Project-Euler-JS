@@ -2,39 +2,18 @@ import {helper} from "./HelperFunctions.js";
 
 // Lattice Paths
 
-const arraySize = 2; 
-const destination = Math.pow(arraySize, 2) - 1;
-const vertStep = 1;
-const horizStep = arraySize;
-
-function createSquareGrid(size) {
-    size++;
-    let grid = [];
-    let h = 0;
-    for (let i = 0; i < size; i++) {
-        grid[i] = [];
-        for (let j = 0; j < size; j++) {
-            grid[i][j] = h++;            
-        }  
-    }
-    return grid;
+function numberOfRoutes(gridSize) {
+    // For an n x n grid, the number of routes is equal to the binomial coefficient (2n choose n)
+    return helper.math.binomialCoefficient(2 * gridSize, gridSize);
 }
 
-let squareGrid = createSquareGrid(arraySize);
+function runCalculation(gridSize) {
+    const routes = numberOfRoutes(gridSize);
+    console.log("Number of routes through a", gridSize, "x", gridSize, "grid:", routes);
+}
 
-squareGrid.forEach((row, i)=> {
-//
-})
-
-console.log(squareGrid);
-console.log(destination);
-
-/*
-Grid mapping:
-Grid      Routes
-1           2
-2           6
-3           
-*/
+// Example usage for a 20x20 grid (Project Euler Problem 15)
+const gridSize = 20;
+runCalculation(gridSize);
 
 //https://www.interactive-maths.com/blog/restricted-taxicab-geometry
