@@ -22,7 +22,7 @@ export let helper = {
             return [...Array(length + 1).keys()].splice(1);
         },
         sum: function(arr) {
-            return arr.reduce((a, b)=> a + b, 0);
+            return arr.reduce((a, b) => a + b, 0);
         },
         multiply: function(arr) {
             return arr.reduce((a, b)=> a * b, 1);
@@ -93,6 +93,14 @@ export let helper = {
             if (n <=0) return;
             let numbers = helper.array.new(n);
             return numbers.reduce((a, b)=> a + (b*b));
+        },
+        sumOfDigits: function(n) { 
+            n = n.toString();
+            return (
+                n.split("").map((x) => {
+                    return parseInt(x, 10);
+                }).reduce((a, b) => a + b, 0)
+            );
         },
         squareOfSums: function(n) {
             if (n <=0) return;
