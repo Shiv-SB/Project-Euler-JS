@@ -199,6 +199,11 @@ export let helper = {
             }
             return triangleNumber;
         },
+        triangleFromString(inputString) {
+            const rows = inputString.trim().split("\n");
+            const triangle = rows.map(row => row.split(" ").map(Number));
+            return triangle;
+        },
         collatzSeq: function(n) {
             const arr = [];
             while (n !== 1) {
