@@ -1,3 +1,4 @@
+// import {helper} from "./HelperFunctions.js";
 export let helper = {
     array: {
         trim: function(arr, lowerBound, upperBound) {
