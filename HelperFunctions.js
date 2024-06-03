@@ -218,6 +218,31 @@ export let helper = {
             return arr;
         },
     },
+    date: {
+        zellerCongruence(year, month, dayOfMonth) {
+            if (month < 1 || month > 12 || dayOfMonth < 1 || dayOfMonth > 31) {
+                throw new Error("Invalid date");
+            }
+            
+            if (month < 3) {
+                month += 12;
+                year -= 1;
+            }
+        
+            const zeroBasedCentury = Math.floor(year / 100);
+            const yearOfCentury = year % 100;
+        
+            const dayOfWeek = (
+                dayOfMonth + Math.floor(13 * (month + 1) / 5) +
+                yearOfCentury +
+                Math.floor(yearOfCentury / 4) +
+                Math.floor(zeroBasedCentury / 4) +
+                5 * zeroBasedCentury
+            ) % 7;
+            
+            return dayOfWeek;
+        }
+    }
 }
 
 
