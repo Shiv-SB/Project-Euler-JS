@@ -23,7 +23,17 @@ export let helper = {
             return [...Array(length + 1).keys()].splice(1);
         },
         sum: function(arr) {
-            return arr.reduce((a, b) => Number(a) + Number(b), 0);
+            if (!Array.isArray(arr)) {
+                throw new TypeError("Input should be an array");
+            }
+        
+            arr.forEach(element => {
+                if (typeof element !== 'number') {
+                    throw new TypeError("All elements in the array should be numbers");
+                }
+            });
+        
+            return arr.reduce((a, b) => a + b, 0);
         },
         multiply: function(arr) {
             return arr.reduce((a, b)=> a * b, 1);
