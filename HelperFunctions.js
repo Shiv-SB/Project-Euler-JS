@@ -23,7 +23,7 @@ export let helper = {
             return [...Array(length + 1).keys()].splice(1);
         },
         sum: function(arr) {
-            return arr.reduce((a, b) => a + b, 0);
+            return arr.reduce((a, b) => Number(a) + Number(b), 0);
         },
         multiply: function(arr) {
             return arr.reduce((a, b)=> a * b, 1);
@@ -102,6 +102,21 @@ export let helper = {
                     return parseInt(x, 10);
                 }).reduce((a, b) => a + b, 0)
             );
+        },
+        factorial(n) {
+            let f = [];
+            if (n == 0 || n == 1)
+                return 1;
+              if (f[n] > 0)
+                return f[n];
+              return f[n] = this.factorial(n-1) * n;
+        },
+        factorialBigInt(n) {
+            let result = BigInt(1);
+            for (let i = 1; i <= n; i++) {
+                result *= BigInt(i);
+            }
+            return result;
         },
         squareOfSums: function(n) {
             if (n <=0) return;
@@ -239,7 +254,7 @@ export let helper = {
                 Math.floor(zeroBasedCentury / 4) +
                 5 * zeroBasedCentury
             ) % 7;
-            
+
             return dayOfWeek;
         }
     }
