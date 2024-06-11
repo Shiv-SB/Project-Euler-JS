@@ -45,6 +45,16 @@ export let helper = {
             return Math.min.apply(this, [...list]);
 
         },
+        intersect(array1, array2) {
+            const setA = new Set(a);
+            const setB = new Set(b);
+            return [...setA].filter(x => setB.has(x));
+        },
+        elementsToNumber(arr) {
+            return arr.map(x => {
+                return Number(x);
+            });
+        },
         equality: function(arr1, arr2) {
             return (
                 arr1.length === arr2.length &&  
@@ -94,6 +104,15 @@ export let helper = {
                 possibleFactor++;
             }
             return factors;
+        },
+        getProperDivisors(n) {
+            const result = [];
+            for (let i = 1; i <= Math.floor(n / 2); i++) {
+                if (helper.math.isDivisibleBy(n, i)) {
+                    result.push(i);
+                }
+            }
+            return result;
         },
         isPalindrome(input) {
             input = input.toString();
