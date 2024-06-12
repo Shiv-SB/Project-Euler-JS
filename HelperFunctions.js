@@ -166,6 +166,7 @@ export let helper = {
                 }).reduce((a, b) => a + b, 0)
             );
         },
+
         factorial(n) {
             let f = [];
             if (n == 0 || n == 1)
@@ -194,6 +195,48 @@ export let helper = {
                 if(n % i == 0) return false;
                 return true;
             }
+        },
+        fibonacci: {
+            generateToMax(max) {
+                let a = BigInt(1), b = BigInt(1);
+                const fibSeq = [a, b];
+                while (true) {
+                    let next = a + b;
+                    fibSeq.push(next);
+                    a = b;
+                    b = next;
+                    if (next >= max) {
+                        break;
+                    }
+                }
+                return fibSeq;
+            },
+            generateToDigit(digit) {
+                let a = BigInt(1), b = BigInt(1);
+                const fibSeq = [a, b];
+                while (true) {
+                    let next = a + b;
+                    fibSeq.push(next);
+                    a = b;
+                    b = next;
+                    if (next.toString().length >= digit) {
+                        break;
+                    }
+                }
+                return fibSeq;
+            },
+            generateFirstNDigit(digit) {
+                const fibSeq = this.generateToDigit(digit);
+                for (let i = 0; i < fibSeq.length; i++) {
+                    const entryLength = fibSeq[i].toString().length;
+                    if (entryLength >= digit) {
+                        console.log(`Fibonacci number with ${digit} digits:`, fibSeq[i].toString());
+                        return i + 1;
+                    }
+                }
+                console.log(`No numbers with ${digit} digits found`);
+                return -1;
+            },
         },
         pythTriplet: {
             isValid: function(a, b, c) {
