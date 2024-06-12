@@ -1,17 +1,25 @@
+// Name Scores
+const t0 = performance.now();
 import { helper } from "./HelperFunctions.js";
-import  csv  from "csv-parser";
-import fs from "fs";
 
 const filePath = "./textfiles/0022_names.csv";
 
-const results = [];
+const namesSorted = (await helper.fetch.csv(filePath)).sort();
+console.log(`Array fetched, length: ${namesSorted.length}`);
 
-fs.createReadStream(filePath)
-    .pipe(csv({ separator: "," }))
-    .on("data", (data) => {
-        console.log(data);
-        results.push(data)
-    })
-    .on("end", () => {
-        console.log(results);
-    });
+//console.log(namesSorted);
+
+function sumOfChars(word) {
+    return helper.array.sum(helper.string.alphabetPos(word));
+}
+
+
+const scoreList = [];
+for (let i = 0; i < namesSorted.length; i++) {
+    const name = namesSorted[i];
+    const position = i + 1;
+    scoreList.push(position * sumOfChars(name));
+}
+
+console.log(`Solution: ${helper.array.sum(scoreList)}. Computed in: ${performance.now() - t0} ms`)
+ 

@@ -1,4 +1,8 @@
 // import {helper} from "./HelperFunctions.js";
+
+import readline from "readline";
+import fs from "fs";
+
 export let helper = {
     array: {
         trim: function(arr, lowerBound, upperBound) {
@@ -184,6 +188,11 @@ export let helper = {
             return result;
         },
     },
+    string: {
+        alphabetPos(text, offset = 1) {
+            return [...text].map(a => parseInt(a, 36) - (10 - offset)).filter(a => a >= 0);
+        },
+    },
     generate: {
         fibSeq: function(length, startingNumber = 1) {
             let fib = [startingNumber, startingNumber + 1];
@@ -286,6 +295,32 @@ export let helper = {
 
             return dayOfWeek;
         }
+    },
+    fetch: {
+        csv: async filePath => {
+            const rows = await new Promise((resolve, reject) => {
+                const rl = readline.createInterface({
+                  input: fs.createReadStream(filePath),
+                  output: process.stdout,
+                  terminal: false
+                });
+            
+                let rows = [];
+                rl.on('line', function(line) {
+                  rows.push(line.split(',').map(item => item.trim()));
+                });
+            
+                rl.on('close', function() {
+                  resolve(rows.flat());
+                });
+            
+                rl.on('error', function(error) {
+                  reject(error);
+                });
+              });
+            
+              return rows;
+        },
     }
 }
 
