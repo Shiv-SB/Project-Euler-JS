@@ -23,8 +23,8 @@ export let helper = {
             });
             return newArr;
         },
-        new: function(length) {
-            return [...Array(length + 1).keys()].splice(1);
+        new: function(length, zeroIndex = false) {
+            return [...Array(length + 1).keys()].splice(zeroIndex ? 0 : 1);
         },
         sum: function(arr) {
             if (!Array.isArray(arr)) {
@@ -73,6 +73,27 @@ export let helper = {
         },
         neighbours: function(array, location, width) {
             return array.slice(location - width, location + width + 1);
+        },
+        permutator(inputArr) { // Lexicographic sort
+            let result = [];
+
+            const permute = (arr, m = []) => {
+                if (arr.length === 0) {
+                    result.push(m);
+                } else {
+                    for (let i = 0; i < arr.length; i++) {
+                        let curr = arr.slice();
+                        let next = curr.splice(i, 1);
+                        permute(curr.slice(), m.concat(next));
+                    }
+                }
+            };
+        
+            permute(inputArr);
+        
+            return result.map((x) => {
+                return x.join("")
+            }).sort();
         },
     },
     math: {
