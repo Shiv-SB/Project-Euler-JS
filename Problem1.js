@@ -1,7 +1,5 @@
-<script src="./HelperFunctions.js"></script>
+import {helper} from "./HelperFunctions.js";
 
-<p id="output"></p>
-<script>
 const arrayLength = 1000;
 const allN = new Array(arrayLength);
 let filteredArr = [];
@@ -19,5 +17,4 @@ console.log(filteredArr);
 filteredArr = filteredArr.reduce((a, b)=> a + b, 0);
 
 
-output(filteredArr);
-</script>
+console.log("Solution: ", filteredArr);

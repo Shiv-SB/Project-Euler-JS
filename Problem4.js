@@ -1,7 +1,4 @@
-<script src="./HelperFunctions.js"></script>
-<p id="output"></p>
-
-<script>
+import {helper} from "./HelperFunctions.js";
 
 let potentials = []
 let upperBound = 998001; //(999 * 999)
@@ -22,11 +19,8 @@ for (let i = 100; i < 999; i++) {
 products = trimArray(products, lowerBound, upperBound);
 
 let palindromes = potentials.filter((number, i)=>{
-    return isPalindrome(number) && products.includes(number);
+    return helper.math.isPalindrome(number) && products.includes(number);
 }) // Gets largest palindrome but doesnt check if there a product of 3 digits.
 // Can either compare agaisnt an array of 3 digit products or get factors and compare.
 
-console.log(palindromes)
-output(palindromes.pop());
-
-</script>
+console.log(palindromes.pop());

@@ -1,8 +1,4 @@
-<script src="./HelperFunctions.js"></script>
-Largest Product in a series
-<p id="output"></p>
-
-<script>
+import {helper} from "./HelperFunctions.js";
 
 const series = [
     "73167176531330624919225119674426574742355349194934",
@@ -53,7 +49,4 @@ for (let i = 0; i < neighbourhoods.length; i++) {
     )
 }
 
-output(helper.array.max(products));
-
-
-</script>
+console.log(helper.array.max(products));

@@ -1,6 +1,5 @@
-<script src="./HelperFunctions.js"></script>
-<p id="output"></p>
-<script>
+
+import {helper} from "./HelperFunctions.js";
 
 const upperLimit = 4_000_000;
 let fibSeq = helper.generate.fibSeq(60)
@@ -11,7 +10,4 @@ fibSeq = fibSeq.filter((val)=> {
     return helper.math.isEven(val);
 });
 
-output(helper.array.sum(fibSeq));
-
-</script>
-
+console.log(helper.array.sum(fibSeq));

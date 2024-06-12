@@ -1,8 +1,4 @@
-<script src="./HelperFunctions.js"></script>
-Special Pythagorean Triplet
-<p id="output"></p>
-
-<script>
+import {helper} from "./HelperFunctions.js";
 
 let a, b, c;
 
@@ -19,17 +15,14 @@ c = (-1 * a**2 + 1000*a - 500_000)/(a - 1000);
 
 const upperBound = 1000;
 let validTriplets = helper.generate.pythTriplet(upperBound);
-let specialTriplet = [];
 
 
 // test:
 for (let i = 0; i < validTriplets.length; i++) {
     let triplet = validTriplets[i];
     let sum = helper.array.sum(triplet);
-    console.log(sum);    
+    //console.log(sum);    
 }
 
-output(helper.array.multiply(validTriplets[0])) // got 0th index by inspection
+console.log(helper.array.multiply(validTriplets[0])) // got 0th index by inspection
 
-
-</script>

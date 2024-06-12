@@ -379,6 +379,7 @@ export let helper = {
 }
 
 
-function output(o, id="output") {
-    document.getElementById(id).innerHTML = o;
+function output(o) {
+    //document.getElementById(id).innerHTML = o;
+    console.log(o);
 }

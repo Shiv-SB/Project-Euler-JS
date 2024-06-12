@@ -1,12 +1,7 @@
-<script src="./HelperFunctions.js"></script>
-<p id="output"></p>
-
-<script>
+import {helper} from "./HelperFunctions.js";
 
 let n = 100;
 let a = helper.math.sumOfSquares(n);
 let b = helper.math.squareOfSums(n);
 
 output(b-a);
-
-</script>
