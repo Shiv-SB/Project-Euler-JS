@@ -118,6 +118,15 @@ export let helper = {
             }
             return result;
         },
+        getProperDivisorsSum(n) {
+            let result = 0;
+            for (let i = 1; i <= Math.floor(n / 2); i++) {
+                if (helper.math.isDivisibleBy(n, i)) {
+                    result += i;
+                }
+            }
+            return result;
+        },
         isPalindrome(input) {
             input = input.toString();
             inputReversed = input.split("").reverse().join("");
@@ -186,6 +195,15 @@ export let helper = {
                 result *= (n - i) / (i + 1);
             }
             return result;
+        },
+        isAbundant(n) {
+            return this.math.getProperDivisorsSum(n) > n;
+        },
+        isDeficient(n) {
+            return this.math.getProperDivisorsSum(n) < n;
+        },
+        isPerfect(n) {
+            return this.math.getProperDivisorsSum(n) === n;
         },
     },
     string: {
@@ -269,6 +287,21 @@ export let helper = {
             }
             arr.push(1);
             return arr;
+        },
+        deficientAbundantPerfect(type, limit) { // Function to generate an array of numbers which are either deficient, abundant or perfect
+            const types = ["deficient", "abundant", "perfect"];
+            if(!types.includes(type)) {
+                console.error(`Type must be one of the following: ${types.join(", ")}`);
+                return;
+            }
+            const results = [];
+            for (let i = 1; i <= limit; i++) {
+                const sumOfDivs = helper.math.getProperDivisorsSum(i);
+                if(type === "deficient" && sumOfDivs < i) results.push(i);
+                if(type === "abundant" && sumOfDivs > i) results.push(i);
+                if(type === "perfect" && sumOfDivs === i) results.push(i);
+            };
+            return results;
         },
     },
     date: {
