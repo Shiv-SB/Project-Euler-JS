@@ -4,4 +4,4 @@ import {helper} from "./HelperFunctions.js";
 
 const limit: number = 1000;
 
-console.log(helper.math.findLongestReciprocal(limit));
+console.log("Solution:", helper.math.findLongestReciprocal(limit));

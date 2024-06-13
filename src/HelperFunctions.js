@@ -193,17 +193,19 @@ export let helper = {
         isPrime: function(n) {
             if(n === 2) return true;
             if (n < 2) return false;
-        
-            for(i = 2; i < n; i++) {
-                if(n % i == 0) return false;
-                return true;
+            if (n % 2 === 0 || n % 3 === 0) return false;
+
+            for (let i = 5; i * i <= n; i += 6) {
+                if (n % i === 0 || n % (i + 2) === 0) return false;
             }
+            return true;
         },
         findLongestReciprocal(limit) {
             let maxCycleLength = 0;
             let numberWithMaxCycle = 0;
-        
-            for (let d = 3; d < limit; d+=2) {
+            let primesList = helper.generate.primeList(limit);
+            for (let i in primesList) {
+                let d = primesList[i];
                 let remainders = new Array(limit).fill(-1);
                 let val = 1;
                 let position = 1;
