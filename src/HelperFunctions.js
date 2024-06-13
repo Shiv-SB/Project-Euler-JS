@@ -284,13 +284,12 @@ export let helper = {
             return fib;
         },
         primeList: function(n) { // gets array of primes up to max value n
-            let sieve = new Array(n + 1).fill(false);
+            let sieve = [];
             let primes = [];
-            for (let i = 2; i <= n; ++i) { // bun bug here
-                if (!sieve[i]) {
+            for (i = 2; i <= n; ++i) {
+                if(!sieve[i]) {
                     primes.push(i);
-                    console.log(i);
-                    for (let j = i * i; j <= n; j += i) {
+                    for (j = i << 1; j <= n; j += i) {
                         sieve[j] = true;
                     }
                 }
