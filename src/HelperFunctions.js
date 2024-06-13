@@ -95,6 +95,9 @@ export let helper = {
                 return x.join("")
             }).sort();
         },
+        equalElements(arr) {
+            return new Set(arr).size === 1;
+        },
     },
     math: {
         isDivisibleBy: function(input, divisor) {
@@ -196,6 +199,32 @@ export let helper = {
                 return true;
             }
         },
+        findLongestReciprocal(limit) {
+            let maxCycleLength = 0;
+            let numberWithMaxCycle = 0;
+        
+            for (let d = 3; d < limit; d+=2) {
+                let remainders = new Array(limit).fill(-1);
+                let val = 1;
+                let position = 1;
+        
+                while (remainders[val] === -1 && val !== 0) {
+                    remainders[val] = position;
+                    val *= 10;
+                    val %= d;
+                    position++;
+                }
+        
+                if (val !== 0) {
+                    const cycleLength = position - remainders[val];
+                    if (cycleLength > maxCycleLength) {
+                        maxCycleLength = cycleLength;
+                        numberWithMaxCycle = d;
+                    }
+                }
+            }
+            return numberWithMaxCycle;
+        },
         fibonacci: {
             generateToMax(max) {
                 let a = BigInt(1), b = BigInt(1);
@@ -286,10 +315,10 @@ export let helper = {
         primeList: function(n) { // gets array of primes up to max value n
             let sieve = [];
             let primes = [];
-            for (i = 2; i <= n; ++i) {
+            for (let i = 2; i <= n; ++i) {
                 if(!sieve[i]) {
                     primes.push(i);
-                    for (j = i << 1; j <= n; j += i) {
+                    for (let j = i << 1; j <= n; j += i) {
                         sieve[j] = true;
                     }
                 }
