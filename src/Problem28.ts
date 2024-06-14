@@ -2,7 +2,7 @@ import {helper} from "./HelperFunctions.js";
 
 // Number Spiral Diagonals
 
-type Matrix = number[][];
+/*type Matrix = number[][];
 
 function generateSpiralMatrix(n: number): Matrix | undefined {
     if(helper.math.isEven(n)) {
@@ -70,8 +70,47 @@ function printMatrix(matrix: Matrix): void {
     }
 }
 
-const matrix = generateSpiralMatrix(1001);
+const matrix = generateSpiralMatrix(3);
 
-//printMatrix(matrix!);
+printMatrix(matrix!);
 
-console.log("\nsolution:", sumDiagonals(matrix!));
+console.log("\nsolution:", sumDiagonals(matrix!));*/
+
+/*
+
+consider the matrix:
+
+Consider n x n matrix where n = 3:
+
+7 8 9
+6 1 2
+5 4 3
+
+Lets label each element:
+
+a b c
+d e f
+g h i
+
+Therefore a = 7, b = 8, etc
+
+Consider the corners a, c, g, i
+There exists a general formula for these corners:
+a = n^2 - n + 1
+c = n^2
+g = n^2 - 2n + 2
+i = n^2 - 3n + 3
+
+For n = 3, this covers both diagonals. If expanded to n = 4, computing the diagonals for n = 3 and n = 4 will give the sum for n = 4.
+
+
+*/
+
+
+const limit = 1001;
+let t = 1;
+for (let n = 3; n <= limit; n+=2) {
+    t+= 4 * Math.pow(n, 2) - (6 * n) + 6;
+}
+
+console.log("Solution:", t);
