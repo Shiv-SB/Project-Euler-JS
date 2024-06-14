@@ -2,18 +2,20 @@ import {helper} from "./HelperFunctions.js";
 
 // Number Spiral Diagonals
 
-function generateSpiralMatrix(n) {
+type Matrix = number[][];
+
+function generateSpiralMatrix(n: number): Matrix | undefined {
     if(helper.math.isEven(n)) {
         console.error(`n (${n}) must be odd!`);
         return;
     }
-    let matrix = Array.from({ length: n }, () => Array(n).fill(0));
-    let value = 1;
-    let x = Math.floor(n / 2);
-    let y = Math.floor(n / 2);
-    let dx = [0, 1, 0, -1];
-    let dy = [1, 0, -1, 0];
-    let dir = 0;
+    let matrix: Matrix = Array.from({ length: n }, () => Array(n).fill(0));
+    let value: number = 1;
+    let x: number = Math.floor(n / 2);
+    let y: number = Math.floor(n / 2);
+    let dx: number[] = [0, 1, 0, -1];
+    let dy: number[] = [1, 0, -1, 0];
+    let dir: number = 0;
 
     matrix[x][y] = value++;
 
@@ -38,10 +40,23 @@ function generateSpiralMatrix(n) {
     return matrix;
 }
 
+function sumDiagonals(matrix: Matrix): number {
+    const len = matrix.length;
+    let sum = 0;
 
-function printMatrix(matrix) {
+    for (let i = 0; i < len; i++) {
+        sum += matrix[i][i];
+        if (i !== len - i - 1) {
+            sum += matrix[i][len - i - 1];
+        }
+    }
+    return sum;
+}
+
+
+function printMatrix(matrix: Matrix): void {
     // Determine the maximum length of the elements in the matrix
-    let maxLength = matrix.reduce((max, row) => {
+    let maxLength: number = matrix.reduce((max, row) => {
         return Math.max(max, ...row.map(num => String(num).length));
     }, 0);
 
@@ -55,5 +70,8 @@ function printMatrix(matrix) {
     }
 }
 
+const matrix = generateSpiralMatrix(1001);
 
-printMatrix(generateSpiralMatrix(5));
+//printMatrix(matrix!);
+
+console.log("\nsolution:", sumDiagonals(matrix!));
