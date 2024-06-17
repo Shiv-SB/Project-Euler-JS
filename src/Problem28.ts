@@ -30,11 +30,7 @@ Hence by induction, for an n x n matrix, the sum of diagonals can be computed fr
 Note that we can step over the matricies by 2 opposed to 1, as even sized matricies are not valid spirals.
 */
 
+import { helper } from "./HelperFunctions.ts";
 
-const limit = 1001;
-let t = 1;
-for (let n = 3; n <= limit; n+=2) {
-    t+= 4 * Math.pow(n, 2) - (6 * n) + 6;
-}
-
-console.log("Solution:", t);
+const matrixLength = 1001;
+console.log("Solution:", helper.matrix.sumOfDiagonalsFromLength(matrixLength));

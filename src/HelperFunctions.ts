@@ -1,3 +1,8 @@
+//import { helper } from "./HelperFunctions.ts";
+
+import readline from "readline";
+import fs from "fs";
+
 type Matrix = number[][];
 type Spaceship = -1 | 0 | 1;
 
@@ -136,6 +141,16 @@ export let helper = {
             }
             return sum;
         },
+        sumOfDiagonalsFromLength(matrixLength: number): number { // computes sum of diagonals without the need of the full array  
+            if (helper.math.isEven(matrixLength)) {
+                throw new Error(`Matrix Length ${matrixLength} must be odd!`);
+            }
+            let t = 1;
+            for (let n = 3; n <= matrixLength; n+=2) {
+                t+= 4 * Math.pow(n, 2) - (6 * n) + 6;
+            }
+            return t;
+        }
     },
     math: {
         isDivisibleBy(x: number, divisor: number): boolean {
@@ -307,6 +322,9 @@ export let helper = {
                 const c = (-1 * a**2 + 1000 * a - 500_000) / (a - 1000);
                 return [b, c]; 
             },
+            generate(max: number): Matrix {
+                return helper.generate.pythTriplet(max);
+            },
         },
         binomialCoefficient(n: number, k: number): number {
             let result = 1;
@@ -316,13 +334,138 @@ export let helper = {
             return result;
         },
         isAbundant(n: number): boolean {
-            return this.math.getProperDivisorsSum(n) > n;
+            return helper.math.getProperDivisorsSum(n) > n;
         },
         isDeficient(n: number): boolean {
-            return this.math.getProperDivisorsSum(n) < n;
+            return helper.math.getProperDivisorsSum(n) < n;
         },
         isPerfect(n: number): boolean {
-            return this.math.getProperDivisorsSum(n) === n;
+            return helper.math.getProperDivisorsSum(n) === n;
+        },
+    },
+    string: {
+        alphabetPos(text: string, offset: number = 1): number[] {
+            return [...text].map(a => parseInt(a, 36) - (10 - offset)).filter(a => a >= 0);
+        },
+    },
+    generate: {
+        seq(start: number, end: number) { // end non-inclusive
+            return Array(end - 1).fill(0).map((element, index) => index + start);
+        },
+        fibSeq(length: number, startingNumber: number = 1): number[] {
+            let fib = [startingNumber, startingNumber + 1];
+            for (let i = 2; i < length; i++) { 
+                fib[i] = fib[i - 2] + fib[i - 1];
+            }
+            return fib;
+        },
+        primeList(n: number): number[] { // returns array of primes up to max value n
+            let sieve: boolean[] = [];
+            let primes: number[] = [];
+            for (let i = 2; i <= n; ++i) {
+                if (!sieve[i]) {
+                    primes.push(i);
+                    for (let j = i << 1; j <= n; j += 1) {
+                        sieve[j] = true;
+                    }
+                }
+            }
+            return primes;
+        },
+        nthPrime(n: number, maxSize: number = 1_000_005): number {
+            return helper.generate.primeList(maxSize)[n];
+        },
+        pythTriplet(max: number): Matrix {
+            let validTrips: Matrix = [];
+            for (let i = 1; i < max; i++) {
+                let attempt = [i, ...helper.math.pythTriplet.newFromA(i)];
+                if(helper.math.pythTriplet.isValid(attempt[0], attempt[1], attempt[2])) {
+                    validTrips.push(attempt);
+                }
+            }
+            return validTrips;
+        },
+        triangleNo(n: number): number { // generate nth traingle number
+            return n * (n + 1) / 2;
+        },
+        triangleNoWithMoreThanNFactors(n: number) {
+            let counter = 1;
+            let triNumber = counter++;
+            while (helper.math.getFactors(triNumber).length < n) {
+                triNumber += counter++;
+            }
+            return triNumber;
+        },
+        triangleFromString(inputStr: string, delim: string = "\n") {
+            const rows = inputStr.trim().split(delim);
+            return rows.map(row => row.split(" ").map(Number));
+        },
+        collatzSeq(n: number): number[] {
+            const arr: number[] = [];
+            while (n !== 1) {
+                arr.push(n);
+                if (n % 2 === 0) {
+                    n /= 2;
+                } else {
+                    n = 3 * n + 1;
+                }
+            }
+            arr.push(1);
+            return arr;
+        },
+        deficientAbundantPerfect(type: "deficient" | "abundant" | "perfect", limit: number) { // Generates array of def, abund or perf numbers
+            const results: number[] = [];
+            for (let i = 1; i < limit; i++) {
+                const sumOfDivs: number = helper.math.getProperDivisorsSum(i);
+                if (type === "deficient" && sumOfDivs < i) results.push(i);
+                if (type === "abundant" && sumOfDivs > i) results .push(i);
+                if (type === "perfect" && sumOfDivs === i) results.push(i);
+            };
+            return results;
+        },
+    },
+    date: {
+        zellerCongruence(year: number, month: number, dayOfMonth: number) { // returns day of the week
+            if (month < 1 || month > 12 || dayOfMonth < 1 || dayOfMonth > 31) {
+                throw new Error("Invalid date");
+            }
+            if (month < 3) {
+                month += 12;
+                year -= 1;
+            }
+            const zeroBasedCentury = Math.floor(year / 100);
+            const yearOfCentury = year % 100;
+
+            const dayOfWeek: number = (
+                dayOfMonth + Math.floor(13 * (month + 1) / 5) +
+                yearOfCentury + 
+                Math.floor(yearOfCentury / 4) + 
+                Math.floor(zeroBasedCentury / 4) +
+                5 * zeroBasedCentury
+            ) % 7;
+            return dayOfWeek;
+        },
+    },
+    fetch: {
+        csv: async (filePath: string, delim: string = ","): Promise<string[]> => {
+            const rows: string[] = await new Promise((resolve, reject) => {
+                const rl = readline.createInterface({
+                    input: fs.createReadStream(filePath),
+                    output: process.stdout,
+                    terminal: false,
+                });
+                let rows: string[][] = [];
+                rl.on("line", (line) => {
+                    rows.push(line.split(delim).map(item => item.trim()));
+                });
+                rl.on("close", () => {
+                    resolve(rows.flat());
+                });
+                rl.on("error", (error) => {
+                    reject(error);
+                });
+            });
+            return rows;
         },
     },
 }

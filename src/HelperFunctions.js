@@ -50,8 +50,8 @@ export let helper = {
 
         },
         intersect(array1, array2) {
-            const setA = new Set(a);
-            const setB = new Set(b);
+            const setA = new Set(array1);
+            const setB = new Set(array2);
             return [...setA].filter(x => setB.has(x));
         },
         elementsToNumber(arr) {
