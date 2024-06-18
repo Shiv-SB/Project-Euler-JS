@@ -1,4 +1,6 @@
-import {helper} from "./HelperFunctions.js";
+import {helper} from "./HelperFunctions.ts";
+
+// Largest Product in a Series
 
 const series = [
     "73167176531330624919225119674426574742355349194934",
@@ -23,16 +25,17 @@ const series = [
     "71636269561882670428252483600823257530420752963450"
 ].join("");
 
-const seriesArray = series.split("");
-const adjacencyLength = 6;
-let products = [];
+const adjacentDigits = 13;
 
-let locationsOf9s = helper.array.indexesOf(seriesArray, 9); // creates array of indexes where the number 9 is
-let neighbourhoods = [];
+const seriesArray = series.split("");
+let products: number[] = [];
+
+let locationsOf9s = helper.array.indexesOf(seriesArray, "9"); // creates array of indexes where the number 9 is
+let neighbourhoods: string[] = [];
 
 for (let i = 0; i < locationsOf9s.length; i++) {
     const location = locationsOf9s[i];    
-    let neighbours = helper.array.neighbours(seriesArray, location, adjacencyLength).join("");
+    let neighbours = helper.array.neighbours(seriesArray, location, Math.floor(adjacentDigits / 2)).join("");
     neighbourhoods.push(neighbours);
 
     //console.log(neighbours);
@@ -42,11 +45,13 @@ for (let i = 0; i < locationsOf9s.length; i++) {
 // I now have any array containing every local neighbourhood of every 9 in "neighbourhoods"
 
 for (let i = 0; i < neighbourhoods.length; i++) {
-
     let neighbourhood = neighbourhoods[i];
-    console.log(
-        products.push(helper.array.multiply(neighbourhood.split("")))
+    let product: number = helper.array.multiply(
+        neighbourhood.split("").map((x) => {
+            return parseInt(x);
+        })
     )
+    products.push(product);
 }
 
-console.log(helper.array.max(products));
+console.log("Solution", helper.array.max(products));

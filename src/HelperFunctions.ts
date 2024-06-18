@@ -166,8 +166,10 @@ export let helper = {
             }
             return !output.has(false) && output.has(true);
         },
-        isEven(x: number): boolean {
-            return !(x % 2);
+        isEven(x: number | bigint): boolean {
+            if(typeof x === "number") return !(x % 2);
+            if(typeof x === "bigint") return !(x % BigInt(2));
+            return false;
         },
         getFactors(x: number): number[] {
             let factors: number[] = [];
@@ -181,6 +183,20 @@ export let helper = {
                         factors.push(otherPossibleFactor);
                     }
                 }
+                possibleFactor++;
+            }
+            return factors;
+        },
+        getPrimeFactors(n: number): number[] {
+            const factors: number[] = [];
+            let divisor = 2;
+            while (n >= 2) {
+              if (n % divisor == 0) {
+                factors.push(divisor);
+                n = n / divisor;
+              } else {
+                divisor++;
+              }
             }
             return factors;
         },
@@ -206,8 +222,8 @@ export let helper = {
             const inputReversed = x.toString().split("").reverse().join("");
             return x.toString() === inputReversed;
         },
-        sumOfSquares(n: number): number | undefined{
-            if (n <= 0) return;
+        sumOfSquares(n: number): number{
+            if (n <= 0) throw new Error("Must be greater than 0");
             const numbers = helper.array.new(n);
             return numbers.reduce((a, b) => a + (b * b));
         },
@@ -231,8 +247,8 @@ export let helper = {
             }
             return result;
         },
-        squareOfSums(n: number) {
-            if (n <= 0) return;
+        squareOfSums(n: number): number {
+            if (n <= 0) throw new Error("Must be greater than 0");
             const numbers: number[] = helper.array.new(n);
             return helper.array.sum(numbers) ** 2;
         },
@@ -272,18 +288,26 @@ export let helper = {
             return numberWithMaxCycle;
         },
         fibonacci: {
-            generateToMax(limit: number): bigint[] {
-                let a: bigint = BigInt(1);
-                let b: bigint = BigInt(1);
-                const fibSeq: bigint[] = [a, b];
-                while (true) {
-                    let next: bigint = a + b;
-                    fibSeq.push(next);
-                    a = b;
-                    b = next;
-                    if (next >= limit) break;
+            generateToMax: function(limit: number): bigint[] {
+                function* fibonacciGenerator(limit: bigint): Generator<bigint, void, unknown> {
+                    let a: bigint = BigInt(1);
+                    let b: bigint = BigInt(1);
+                    yield a;
+                    if (limit > a) yield b;
+                    while (true) {
+                        let next: bigint = a + b;
+                        if (next >= limit) break;
+                        yield next;
+                        a = b;
+                        b = next;
+                    }
                 }
-                return fibSeq;
+            
+                const result: bigint[] = [];
+                for (const num of fibonacciGenerator(BigInt(limit))) {
+                    result.push(num);
+                }
+                return result;
             },
             generateToDigit(n: number): bigint[] { // returns list of fibs up till the first n digit number
                 let a = BigInt(1), b = BigInt(1);
@@ -349,7 +373,7 @@ export let helper = {
         },
     },
     generate: {
-        seq(start: number, end: number) { // end non-inclusive
+        seq(start: number, end: number): number[] { // end non-inclusive
             return Array(end - 1).fill(0).map((element, index) => index + start);
         },
         fibSeq(length: number, startingNumber: number = 1): number[] {
@@ -360,20 +384,33 @@ export let helper = {
             return fib;
         },
         primeList(n: number): number[] { // returns array of primes up to max value n
-            let sieve: boolean[] = [];
+            let sieve: boolean[] = new Array(n + 1).fill(true);
             let primes: number[] = [];
             for (let i = 2; i <= n; ++i) {
-                if (!sieve[i]) {
+                if (sieve[i]) {
                     primes.push(i);
-                    for (let j = i << 1; j <= n; j += 1) {
-                        sieve[j] = true;
+                    for (let j = i * i; j <= n; j += i) {
+                        sieve[j] = false;
                     }
                 }
             }
             return primes;
         },
-        nthPrime(n: number, maxSize: number = 1_000_005): number {
-            return helper.generate.primeList(maxSize)[n];
+        nthPrime(n: number): number {
+            let primes = [2];
+            for(let i = 3; primes.length < n; i += 2) {
+                let i_isPrime = true;
+                for(let j = 0; j < primes.length && primes[j] * primes[j] <= i; j++) {
+                    if(i % primes[j] === 0){
+                        i_isPrime = false;
+                        break;
+                    }
+                }
+                if(i_isPrime){
+                    primes.push(i);
+                }
+            }
+            return primes.pop() as number;
         },
         pythTriplet(max: number): Matrix {
             let validTrips: Matrix = [];

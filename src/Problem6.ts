@@ -1,7 +1,7 @@
-import {helper} from "./HelperFunctions.js";
+import {helper} from "./HelperFunctions.ts";
 
 let n = 100;
 let a = helper.math.sumOfSquares(n);
 let b = helper.math.squareOfSums(n);
 
-output(b-a);
+console.log("Solution", b - a);

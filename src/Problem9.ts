@@ -1,4 +1,4 @@
-import {helper} from "./HelperFunctions.js";
+import {helper} from "./HelperFunctions.ts";
 
 let a, b, c;
 
@@ -16,6 +16,7 @@ c = (-1 * a**2 + 1000*a - 500_000)/(a - 1000);
 const upperBound = 1000;
 let validTriplets = helper.generate.pythTriplet(upperBound);
 
+console.log(validTriplets);
 
 // test:
 for (let i = 0; i < validTriplets.length; i++) {
