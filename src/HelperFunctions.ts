@@ -5,6 +5,7 @@ import fs from "fs";
 
 type Matrix = number[][];
 type Spaceship = -1 | 0 | 1;
+type Triple = [number, number, number];
 
 export let helper = {
     array: {
@@ -336,18 +337,23 @@ export let helper = {
             },
         },
         pythTriplet: {
-            isValid(a: number, b: number, c: number): boolean {
-                const newTrip: number[] = helper.math.pythTriplet.newFromA(a).sort().flat();
-                if (newTrip[0] === b && newTrip[1] === c) return true;
-                return false;
+            isValid(trip: Triple): boolean {
+                const a = trip[0];
+                const b = trip[1];
+                const c = trip[2];
+                return a**2 + b**2 === c**2; 
             },
-            newFromA(a: number): [number, number] {
-                const b = (1000 * a - 500_000) / (a - 1_000);
-                const c = (-1 * a**2 + 1000 * a - 500_000) / (a - 1000);
-                return [b, c]; 
+            new(m: number, n: number): Triple {
+                if (m <= n) {
+                    throw new Error("m must be greater than n");
+                }
+                const a = m**2 - n**2;
+                const b = 2 * m * n;
+                const c = m**2 + n**2;
+                return [a, b, c];
             },
-            generate(max: number): Matrix {
-                return helper.generate.pythTriplet(max);
+            generateUpTo(maxA: number): Triple[] {
+                return helper.generate.pythTriplet(maxA);
             },
         },
         binomialCoefficient(n: number, k: number): number {
@@ -412,15 +418,17 @@ export let helper = {
             }
             return primes.pop() as number;
         },
-        pythTriplet(max: number): Matrix {
-            let validTrips: Matrix = [];
-            for (let i = 1; i < max; i++) {
-                let attempt = [i, ...helper.math.pythTriplet.newFromA(i)];
-                if(helper.math.pythTriplet.isValid(attempt[0], attempt[1], attempt[2])) {
-                    validTrips.push(attempt);
+        pythTriplet(maxA: number): Triple[] {
+            const triplets: [number, number, number][] = [];
+            for (let m = 2; m * m <= maxA; m++) {
+                for (let n = 1; n < m; n++) {
+                    const [a, b, c] = helper.math.pythTriplet.new(m, n);
+                    if (a <= maxA) {
+                        triplets.push([a, b, c]);
+                    }
                 }
             }
-            return validTrips;
+            return triplets;
         },
         triangleNo(n: number): number { // generate nth traingle number
             return n * (n + 1) / 2;
