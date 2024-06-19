@@ -1,4 +1,4 @@
-import {helper} from "./HelperFunctions.js";
+import {helper} from "./HelperFunctions.ts";
 
 const grid = [
   8, 2, 22, 97, 38, 15, 0, 40, 0, 75, 4, 5, 7, 78, 52, 12, 50, 77, 91, 8,
@@ -35,8 +35,8 @@ find largest from product
 */
 
 // needs to be 4 x 4 grid lol
-function getNeighbours(i) {
-    if (i > grid.length) return;
+function getNeighbours(i): number[][] {
+    if (i > grid.length) return [];
     const size = 20;
 
     let neigbhours = [
@@ -48,8 +48,8 @@ function getNeighbours(i) {
     return neigbhours;
 }
 
-function getHighestProduct(grid) { // for 4x4 grid
-    gridF = grid.flat();
+function getHighestProduct(grid): number { // for 4x4 grid
+    const gridF = grid.flat();
     const p = helper.array.multiply;
     const s = 4; // size
     let diag1 = [gridF[0], gridF[5], gridF[10], gridF[15]];
@@ -70,9 +70,9 @@ function getHighestProduct(grid) { // for 4x4 grid
     }));
 }
 
-let prods = [];
+let prods: number[] = [];
 for (let i = 0; i < grid.length; i++) {
     prods.push(getHighestProduct(getNeighbours(i)));
 }
 
-console.log(helper.array.max(prods));
+console.log("Solution:",helper.array.max(prods));
