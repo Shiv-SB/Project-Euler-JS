@@ -1,4 +1,4 @@
-import { helper } from "./HelperFunctions.js";
+import { helper } from "./HelperFunctions.ts";
 
 function solution(x: number): number {
     const factorial = helper.math.factorialBigInt(x);

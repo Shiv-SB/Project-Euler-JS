@@ -1,10 +1,10 @@
-import { helper } from "./HelperFunctions.js";
+import { helper } from "./HelperFunctions.ts";
 
 // Non-Abundant Sums
 
 const limit = 28123;
 
-function nonAbundantSums(limit) {
+function nonAbundantSums(limit: number): number {
     const abundantNumbers = helper.generate.deficientAbundantPerfect("abundant", limit);
     const canBeWrittenAsAbundantSum = new Array(limit + 1).fill(false);
 
@@ -24,8 +24,7 @@ function nonAbundantSums(limit) {
         }
     }
 
-    console.log(`Solution: ${totalSum}`);
     return totalSum;
 }
 
-nonAbundantSums(limit);
+console.log("Solution:", nonAbundantSums(limit));

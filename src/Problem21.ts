@@ -1,11 +1,11 @@
-import { helper } from "./HelperFunctions.js";
+import { helper } from "./HelperFunctions.ts";
 
-function d(n) {
+function d(n: number): number {
     return helper.array.sum(helper.math.getProperDivisors(n));
 }
 
-function generateDMap(start, end) {
-    const dMap = new Map();
+function generateDMap(start: number, end: number): Map<number, number> {
+    const dMap: Map<number, number> = new Map();
     for (let i = start; i <= end; i++) {
         dMap.set(i, d(i));
     }
@@ -14,7 +14,7 @@ function generateDMap(start, end) {
 
 const map = generateDMap(1, 10_000);
 
-const resultSet = new Set();
+const resultSet: Set<number> = new Set();
 
 for (let [key, value] of map) {
     if (key !== value && value <= 10_000 && map.get(value) === key) {
@@ -23,7 +23,7 @@ for (let [key, value] of map) {
     }
 }
 
-const amicableNumbers = Array.from(resultSet);
+const amicableNumbers: number[] = Array.from(resultSet);
 
 console.log(amicableNumbers);
-console.log(helper.array.sum(amicableNumbers)); 
+console.log("Solution:", helper.array.sum(amicableNumbers)); 
