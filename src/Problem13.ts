@@ -103,8 +103,8 @@ const list = [
     '53503534226472524250874054075591789781264330331690'
 ];
 
-const sum = list.reduce((acc, curr) => {
+const sum = list.reduce((acc, curr): string => {
     return (BigInt(acc) + BigInt(curr)).toString();
 }, '0');
 
-console.log(sum.split("").slice(0, 10).join(""));
+console.log("Solution:", sum.substring(0, 10));

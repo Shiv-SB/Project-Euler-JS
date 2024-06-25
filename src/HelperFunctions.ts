@@ -151,6 +151,27 @@ export let helper = {
                 t+= 4 * Math.pow(n, 2) - (6 * n) + 6;
             }
             return t;
+        },
+        triangles: {
+            generateFromString(str: string, delim?: string): Matrix {
+                return helper.generate.triangleFromString(str, delim);
+            },
+            getMaxSumPath(triangle: Matrix): number { // Finds the max total path from top to bottom
+                for (let i = triangle.length - 2; i >= 0; i--) {
+                    // Iterate through row
+                    for (let j = 0; j < triangle[i].length; j++) {
+                      // Updates the current element with the maximum sum of itself and its two neighbors below
+                      triangle[i][j] += Math.max(triangle[i + 1][j], triangle[i + 1][j + 1]);
+                    }
+                  }
+                  return triangle[0][0];
+            },
+            print(triangle: Matrix): void {
+                triangle.forEach((row, index) => {
+                    const padding = " ".repeat((triangle.length - index - 1) * 3);
+                    console.log(padding + row.join(" ".repeat(6)));
+                });
+            },
         }
     },
     math: {
@@ -228,7 +249,7 @@ export let helper = {
             const numbers = helper.array.new(n);
             return numbers.reduce((a, b) => a + (b * b));
         },
-        sumOfDigits(n: number): number {
+        sumOfDigits(n: number | bigint): number {
             return (
                 n.toString().split("").map((x) => {
                     return parseInt(x, 10);
@@ -489,6 +510,17 @@ export let helper = {
                 5 * zeroBasedCentury
             ) % 7;
             return dayOfWeek;
+        },
+        countOfDayOnXOfMonth(dayOfWeek: number, dayOfMonth: number, startYear: number, endYear: number): number {
+            let count = 0;
+            for (let year = startYear; year <= endYear; year++) {
+                for (let month = 1; month <= 12; month++) {
+                    if(helper.date.zellerCongruence(year, month, dayOfMonth) === dayOfWeek) { // Day of week starts on Sunday/1
+                        count++;
+                    }
+                }
+            }
+            return count;
         },
     },
     fetch: {
