@@ -479,6 +479,18 @@ export let helper = {
             arr.push(1);
             return arr;
         },
+        distinctPowerCombinations(a_lowerLim: number, a_upperLim: number, b_lowerLim: number, b_upperLim: number): bigint[] {
+            let results: Set<bigint> = new Set();
+            for (let i = a_lowerLim; i <= a_upperLim; i++) {
+                for(let j = b_lowerLim; j <= b_upperLim; j++) {
+                    const base = BigInt(i);
+                    const pow = BigInt(j);
+                    const x = BigInt(base ** pow);
+                    results.add(x);
+                }
+            }
+            return Array.from(results);
+        },
         deficientAbundantPerfect(type: "deficient" | "abundant" | "perfect", limit: number) { // Generates array of def, abund or perf numbers
             const results: number[] = [];
             for (let i = 1; i < limit; i++) {
