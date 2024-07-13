@@ -6,6 +6,7 @@ import fs from "fs";
 type Matrix = number[][];
 type Spaceship = -1 | 0 | 1;
 type Triple = [number, number, number];
+export type Coins = 1 | 2 | 5 | 10 | 20 | 50 | 100 | 200;
 
 export let helper = {
     array: {
@@ -308,6 +309,18 @@ export let helper = {
                 }
             }
             return numberWithMaxCycle;
+        },
+        coins: {
+            totalCombos(coins: Coins[], goal: number): number {
+                const combos: number[] = Array(goal + 1).fill(0);
+                combos[0] = 1;
+                for (const coin of coins) {
+                    for (let j = coin; j <= goal; j++) {
+                        combos[j] += combos[j - coin];
+                    }
+                }
+                return combos[goal];
+            },
         },
         fibonacci: {
             generateToMax: function(limit: number): bigint[] {
